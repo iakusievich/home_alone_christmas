@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Alone: Festive A2 ESL Interactive Lesson</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Mountains of Christmas / Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for festive icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        evergreen: {
+                            800: '#163A2B',
+                            900: '#0F291E',
+                            950: '#091A13'
+                        },
+                        crimson: {
+                            600: '#B91C1C',
+                            700: '#991B1B',
+                            800: '#7F1D1D'
+                        },
+                        gold: {
+                            400: '#FACC15',
+                            500: '#D4AF37',
+                            600: '#B49020'
+                        },
+                        snow: {
+                            50: '#FDFBF7',
+                            100: '#F7F3EA',
+                            200: '#EBE3D5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom animations and 3D card flip mechanics */
+        body {
+            background-color: #0F291E;
+            color: #FDFBF7;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Snowfall Canvas */
+        #snow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 3D Flip Card Styles */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #091A13;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+        }
+
+        /* Twinkling Fairy Lights Effect */
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+        .fairy-light {
+            animation: twinkle 2s infinite ease-in-out;
+        }
+        .fairy-light:nth-child(odd) {
+            animation-delay: 0.7s;
+        }
+        .fairy-light:nth-child(3n) {
+            animation-delay: 1.4s;
+        }
+
+        /* Teacher Mode Highlight */
+        .teacher-hint {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-crimson-700 selection:text-white">
+
+    <!-- Subtle Snowfall Background -->
+    <canvas id="snow-canvas"></canvas>
+
+    <!-- Main Container -->
+    <div class="content-wrapper min-h-screen flex flex-col">
+
+        <!-- Festive Top String Lights -->
+        <div class="w-full h-3 bg-evergreen-950 flex justify-around items-center px-4 overflow-hidden border-b border-gold-500/20">
+            <span class="w-2.5 h-2.5 rounded-full bg-crimson-600 shadow-[0_0_8px_#dc2626] fairy-light"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-gold-400 shadow-[0_0_8px_#facc15] fairy-light"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] fairy-light"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-crimson-600 shadow-[0_0_8px_#dc2626] fairy-light"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-gold-400 shadow-[0_0_8px_#facc15] fairy-light"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] fairy-light"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-crimson-600 shadow-[0_0_8px_#dc2626] fairy-light"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-gold-400 shadow-[0_0_8px_#facc15] fairy-light"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] fairy-light"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-crimson-600 shadow-[0_0_8px_#dc2626] fairy-light"></span>
+        </div>
+
+        <!-- Sticky Top Control Bar (Teacher Controls, Timer, Progress) -->
+        <header class="sticky top-0 z-40 bg-evergreen-950/95 backdrop-blur-md border-b border-gold-500/30 shadow-lg">
+            <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+                <!-- Branding & Level Badge -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-crimson-700 border border-gold-400 flex items-center justify-center text-gold-400 shadow-md">
+                        <i class="fa-solid fa-house-chimney-window text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="font-serif text-lg sm:text-xl font-bold text-snow-50 tracking-wide">Home Alone: Holiday Chaos</h1>
+                            <span class="px-2 py-0.5 text-xs font-bold bg-gold-500 text-evergreen-950 rounded-full">A2 Adult • 1-on-1</span>
+                        </div>
+                        <p class="text-xs text-snow-200/70 hidden sm:block">60-Minute Communicative Online Lesson</p>
+                    </div>
+                </div>
+
+                <!-- Right Controls: Timer & Teacher Mode Toggle -->
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <!-- Lesson Timer -->
+                    <div class="flex items-center gap-2 bg-evergreen-900 border border-gold-500/30 px-3 py-1.5 rounded-xl">
+                        <i class="fa-regular fa-clock text-gold-400 text-sm"></i>
+                        <span id="lesson-timer" class="font-mono text-sm font-bold text-snow-50">60:00</span>
+                        <button onclick="toggleTimer()" id="timer-btn" class="text-xs px-2 py-0.5 rounded bg-gold-500/20 hover:bg-gold-500/40 text-gold-400 transition" title="Start/Pause Timer">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                        <button onclick="resetTimer()" class="text-xs px-1.5 py-0.5 rounded hover:bg-white/10 text-snow-200/70 transition" title="Reset Timer">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Teacher Answer Key / Methodological Notes Toggle -->
+                    <button onclick="toggleTeacherMode()" id="teacher-toggle-btn" class="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-gold-500/40 bg-evergreen-900 hover:bg-evergreen-800 text-sm font-medium transition shadow-sm">
+                        <i class="fa-solid fa-chalkboard-user text-gold-400"></i>
+                        <span class="hidden md:inline">Teacher Key:</span>
+                        <span id="teacher-status-badge" class="px-2 py-0.5 text-xs rounded-full bg-white/10 text-snow-200">OFF</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stage Navigation Tabs -->
+            <nav class="max-w-6xl mx-auto px-4 pb-2 overflow-x-auto">
+                <div class="flex space-x-2 min-w-max">
+                    <button onclick="switchStage(1)" id="tab-1" class="stage-tab px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-crimson-700 text-white shadow-md border border-gold-400/50">
+                        <span class="w-5 h-5 rounded-full bg-gold-500 text-evergreen-950 text-xs flex items-center justify-center font-bold">1</span>
+                        Warm-Up <span class="text-xs opacity-75">(7m)</span>
+                    </button>
+                    <button onclick="switchStage(2)" id="tab-2" class="stage-tab px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-evergreen-900/80 text-snow-200 hover:bg-evergreen-800 border border-transparent">
+                        <span class="w-5 h-5 rounded-full bg-evergreen-800 text-gold-400 text-xs flex items-center justify-center font-bold">2</span>
+                        Vocabulary Lab <span class="text-xs opacity-75">(15m)</span>
+                    </button>
+                    <button onclick="switchStage(3)" id="tab-3" class="stage-tab px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-evergreen-900/80 text-snow-200 hover:bg-evergreen-800 border border-transparent">
+                        <span class="w-5 h-5 rounded-full bg-evergreen-800 text-gold-400 text-xs flex items-center justify-center font-bold">3</span>
+                        Trailer & Tasks <span class="text-xs opacity-75">(15m)</span>
+                    </button>
+                    <button onclick="switchStage(4)" id="tab-4" class="stage-tab px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-evergreen-900/80 text-snow-200 hover:bg-evergreen-800 border border-transparent">
+                        <span class="w-5 h-5 rounded-full bg-evergreen-800 text-gold-400 text-xs flex items-center justify-center font-bold">4</span>
+                        Functional English <span class="text-xs opacity-75">(13m)</span>
+                    </button>
+                    <button onclick="switchStage(5)" id="tab-5" class="stage-tab px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-evergreen-900/80 text-snow-200 hover:bg-evergreen-800 border border-transparent">
+                        <span class="w-5 h-5 rounded-full bg-evergreen-800 text-gold-400 text-xs flex items-center justify-center font-bold">5</span>
+                        Defend Your House! <span class="text-xs opacity-75">(10m)</span>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6 sm:py-8">
+
+            <!-- Toast / Custom Notification Box (Replaces alert) -->
+            <div id="toast-box" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-evergreen-950 border-2 border-gold-400 text-snow-50 px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 max-w-sm">
+                <i id="toast-icon" class="fa-solid fa-bell text-gold-400 text-xl"></i>
+                <p id="toast-msg" class="text-sm font-medium"></p>
+            </div>
+
+            <!-- =====================================================================
+                 STAGE 1: FESTIVE WARM-UP & VISUAL HOOK (5-7 MINS)
+            ====================================================================== -->
+            <section id="stage-1" class="stage-section space-y-6">
+                <!-- Stage Header -->
+                <div class="bg-gradient-to-r from-crimson-800 to-evergreen-800 rounded-3xl p-6 sm:p-8 border border-gold-500/30 shadow-xl">
+                    <div class="flex flex-wrap justify-between items-start gap-4">
+                        <div>
+                            <span class="inline-block px-3 py-1 rounded-full bg-gold-500/20 text-gold-400 text-xs font-bold uppercase tracking-wider mb-2">Stage 1 • 5–7 Minutes</span>
+                            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-snow-50">Festive Warm-Up: Holiday Preferences & Chaos</h2>
+                            <p class="text-snow-200/90 mt-2 max-w-2xl text-sm sm:text-base">Click your choice in each festive dilemma below and explain <strong>why</strong>! Use simple connectors like <em>because, however,</em> or <em>for example</em>.</p>
+                        </div>
+                        <div class="teacher-hint hidden bg-evergreen-950/90 border border-gold-400/50 p-4 rounded-2xl max-w-sm text-xs text-snow-100">
+                            <p class="font-bold text-gold-400 mb-1"><i class="fa-solid fa-lightbulb mr-1"></i> Teacher Tip (Rapport & STT):</p>
+                            <p>Ask the student to share their choice first, then share yours! Follow up with "When was the last time...?" to activate Past Simple naturally before watching the movie trailer.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive "This or That: Christmas Edition" -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="this-or-that-grid">
+                    <!-- Cards injected by JS -->
+                </div>
+
+                <!-- Lead-in Discussion Box -->
+                <div class="bg-snow-50 text-evergreen-950 rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-gold-500/40">
+                    <h3 class="font-serif text-xl font-bold text-crimson-700 flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-comments"></i> Quick Lead-In: Holiday Travel & Memories
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-snow-100 p-4 rounded-2xl border border-snow-200">
+                            <span class="text-xs font-bold text-crimson-700 uppercase">Question 1</span>
+                            <p class="font-semibold mt-1 text-evergreen-900">Have you ever watched the movie <em>"Home Alone"</em>? How many times?</p>
+                            <p class="text-xs text-evergreen-800/70 mt-2 italic">Starter: "Yes, I watch it every..."</p>
+                        </div>
+                        <div class="bg-snow-100 p-4 rounded-2xl border border-snow-200">
+                            <span class="text-xs font-bold text-crimson-700 uppercase">Question 2</span>
+                            <p class="font-semibold mt-1 text-evergreen-900">Did you ever forget something very important when going on a trip?</p>
+                            <p class="text-xs text-evergreen-800/70 mt-2 italic">Starter: "Once, I forgot my..."</p>
+                        </div>
+                        <div class="bg-snow-100 p-4 rounded-2xl border border-snow-200">
+                            <span class="text-xs font-bold text-crimson-700 uppercase">Question 3</span>
+                            <p class="font-semibold mt-1 text-evergreen-900">What is the best thing about being completely home alone for a weekend?</p>
+                            <p class="text-xs text-evergreen-800/70 mt-2 italic">Starter: "When I am home alone, I love..."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end">
+                    <button onclick="switchStage(2)" class="px-6 py-3 rounded-2xl bg-gold-500 hover:bg-gold-400 text-evergreen-950 font-bold shadow-lg transition flex items-center gap-2">
+                        Next: Vocabulary Lab <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- =====================================================================
+                 STAGE 2: CHRISTMAS & MOVIE VOCABULARY LAB (12-15 MINS)
+            ====================================================================== -->
+            <section id="stage-2" class="stage-section hidden space-y-8">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-evergreen-800 to-crimson-800 rounded-3xl p-6 sm:p-8 border border-gold-500/30 shadow-xl">
+                    <div class="flex flex-wrap justify-between items-start gap-4">
+                        <div>
+                            <span class="inline-block px-3 py-1 rounded-full bg-gold-500/20 text-gold-400 text-xs font-bold uppercase tracking-wider mb-2">Stage 2 • 12–15 Minutes</span>
+                            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-snow-50">Christmas & Movie Vocabulary Lab</h2>
+                            <p class="text-snow-200/90 mt-2 max-w-2xl text-sm sm:text-base">Click each card to flip it! Read the pronunciation, definition, and example aloud with your teacher.</p>
+                        </div>
+                        <div class="teacher-hint hidden bg-evergreen-950/90 border border-gold-400/50 p-4 rounded-2xl max-w-sm text-xs text-snow-100">
+                            <p class="font-bold text-gold-400 mb-1"><i class="fa-solid fa-lightbulb mr-1"></i> Teacher Tip (MFP):</p>
+                            <p>Elicit meaning from the icon/word first before flipping. Drill tricky pronunciations: <em>suburbs</em> /ˈsʌb.ɜːbz/ and <em>ornament</em> /ˈɔː.nə.mənt/.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part A: 10 Interactive Flip Cards -->
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-serif text-xl font-bold text-gold-400"><i class="fa-solid fa-layer-group mr-2"></i>Part A: Interactive Flashcards (Click to Flip)</h3>
+                        <button onclick="flipAllCards()" class="text-xs px-3 py-1.5 rounded-xl bg-evergreen-800 hover:bg-evergreen-700 text-snow-100 border border-gold-500/30 transition">
+                            <i class="fa-solid fa-rotate mr-1"></i> Flip All Cards
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" id="vocab-cards-grid">
+                        <!-- 10 Flip Cards injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Part B: Interactive Gap-Fill Practice Quiz -->
+                <div class="bg-snow-50 text-evergreen-950 rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-gold-500/40">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                        <div>
+                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-crimson-700"><i class="fa-solid fa-pen-to-square mr-2"></i>Part B: Complete the Story (Gap-Fill)</h3>
+                            <p class="text-sm text-evergreen-800/80 mt-1">Select a word from the Word Bank, then click the matching blank space in the sentences!</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="px-4 py-2 rounded-xl bg-evergreen-900 text-gold-400 font-bold text-sm">
+                                Score: <span id="vocab-score">0</span> / 8
+                            </span>
+                            <button onclick="resetVocabQuiz()" class="px-3 py-2 rounded-xl bg-snow-200 hover:bg-snow-300 text-evergreen-900 text-sm font-semibold transition">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Clickable Word Bank -->
+                    <div class="bg-evergreen-900/10 p-4 rounded-2xl mb-6 border border-evergreen-900/20">
+                        <p class="text-xs font-bold uppercase tracking-wider text-evergreen-900 mb-3">Word Bank (Click a word to select it):</p>
+                        <div class="flex flex-wrap gap-2" id="word-bank-container">
+                            <!-- Word pills injected via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Sentences with interactive blanks -->
+                    <div class="space-y-3 text-base sm:text-lg" id="gap-fill-sentences">
+                        <!-- Sentences injected via JS -->
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="switchStage(1)" class="px-5 py-3 rounded-2xl bg-evergreen-800 hover:bg-evergreen-700 text-snow-100 font-semibold transition flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Back
+                    </button>
+                    <button onclick="switchStage(3)" class="px-6 py-3 rounded-2xl bg-gold-500 hover:bg-gold-400 text-evergreen-950 font-bold shadow-lg transition flex items-center gap-2">
+                        Next: Watch the Trailer <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- =====================================================================
+                 STAGE 3: TRAILER VIEWING & COMPREHENSION (15 MINS)
+            ====================================================================== -->
+            <section id="stage-3" class="stage-section hidden space-y-8">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-crimson-800 to-evergreen-800 rounded-3xl p-6 sm:p-8 border border-gold-500/30 shadow-xl">
+                    <div class="flex flex-wrap justify-between items-start gap-4">
+                        <div>
+                            <span class="inline-block px-3 py-1 rounded-full bg-gold-500/20 text-gold-400 text-xs font-bold uppercase tracking-wider mb-2">Stage 3 • 15 Minutes</span>
+                            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-snow-50">Movie Trailer: <em>Home Alone</em> (1990)</h2>
+                            <p class="text-snow-200/90 mt-2 max-w-2xl text-sm sm:text-base">Watch the official trailer and complete the viewing tasks below.</p>
+                        </div>
+                        <div class="teacher-hint hidden bg-evergreen-950/90 border border-gold-400/50 p-4 rounded-2xl max-w-sm text-xs text-snow-100">
+                            <p class="font-bold text-gold-400 mb-1"><i class="fa-solid fa-lightbulb mr-1"></i> Teacher Tip (Viewing Strategy):</p>
+                            <p>Play the trailer twice! First time: general gist & Ordering Events. Second time: pause at key moments for the True/False details.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Player + Before You Watch Prediction -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    <!-- Embedded YouTube Trailer -->
+                    <div class="lg:col-span-7 bg-evergreen-950 rounded-3xl overflow-hidden border-2 border-gold-500/40 shadow-2xl">
+                        <div class="aspect-video w-full bg-black relative">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/jEDaVHmw7r4" title="Home Alone Official Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="p-4 bg-evergreen-950 flex flex-wrap items-center justify-between gap-2 text-xs text-snow-200/80">
+                            <span><i class="fa-brands fa-youtube text-crimson-600 mr-1 text-base align-middle"></i> Official 20th Century Studios Trailer (2:24)</span>
+                            <a href="https://www.youtube.com/watch?v=jEDaVHmw7r4" target="_blank" rel="noopener noreferrer" class="text-gold-400 hover:underline font-semibold">
+                                Open in YouTube <i class="fa-solid fa-up-right-from-square ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Before You Watch Box -->
+                    <div class="lg:col-span-5 bg-snow-50 text-evergreen-950 rounded-3xl p-6 shadow-xl border-2 border-gold-500/40 space-y-4">
+                        <div class="flex items-center gap-2 text-crimson-700 font-serif font-bold text-xl">
+                            <i class="fa-solid fa-eye"></i>
+                            <h3>1. Before You Watch (Prediction)</h3>
+                        </div>
+                        <p class="text-sm text-evergreen-900">Look at the trailer thumbnail and think about the story. Discuss with your teacher:</p>
+                        <ul class="space-y-3 text-sm">
+                            <li class="p-3 rounded-xl bg-snow-100 border border-snow-200">
+                                <strong>Where</strong> is Kevin's family going for Christmas?
+                            </li>
+                            <li class="p-3 rounded-xl bg-snow-100 border border-snow-200">
+                                <strong>How</strong> do his parents accidentally leave an 8-year-old boy behind?
+                            </li>
+                            <li class="p-3 rounded-xl bg-snow-100 border border-snow-200">
+                                <strong>Who</strong> are the two men outside the house, and what do they want?
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- While You Watch: Task A (Ordering Events) & Task B (True/False) -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Task A: Put the Trailer Events in Order (1-5) -->
+                    <div class="bg-snow-50 text-evergreen-950 rounded-3xl p-6 shadow-xl border-2 border-gold-500/40">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-serif text-xl font-bold text-crimson-700"><i class="fa-solid fa-list-ol mr-2"></i>2A. Order the Trailer Events</h3>
+                            <button onclick="checkEventOrder()" class="px-3 py-1.5 rounded-xl bg-evergreen-900 hover:bg-evergreen-800 text-gold-400 text-xs font-bold transition">
+                                Check Order
+                            </button>
+                        </div>
+                        <p class="text-xs text-evergreen-800/80 mb-4">Number the events from <strong>1</strong> (first in the trailer) to <strong>5</strong> (last in the trailer).</p>
+                        
+                        <div class="space-y-3" id="ordering-tasks-list">
+                            <!-- Ordering items injected via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Task B: True or False -->
+                    <div class="bg-snow-50 text-evergreen-950 rounded-3xl p-6 shadow-xl border-2 border-gold-500/40">
+                        <h3 class="font-serif text-xl font-bold text-crimson-700 mb-3"><i class="fa-solid fa-check-double mr-2"></i>2B. True or False?</h3>
+                        <p class="text-xs text-evergreen-800/80 mb-4">Click <strong>True</strong> or <strong>False</strong> based on what you see and hear in the trailer.</p>
+                        
+                        <div class="space-y-3" id="tf-tasks-list">
+                            <!-- True/False items injected via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- After You Watch: Discussion Cards with Clickable Sentence Starters -->
+                <div class="bg-evergreen-950/80 rounded-3xl p-6 sm:p-8 border border-gold-500/30 shadow-xl">
+                    <h3 class="font-serif text-xl sm:text-2xl font-bold text-gold-400 mb-2"><i class="fa-solid fa-champagne-glasses mr-2"></i>3. After You Watch: Discussion Cards</h3>
+                    <p class="text-sm text-snow-200/80 mb-5">Discuss these questions together. Need help expressing your idea? Click <strong>"Show Speaking Help"</strong> on any card!</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="after-watch-cards">
+                        <!-- Discussion cards injected via JS -->
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="switchStage(2)" class="px-5 py-3 rounded-2xl bg-evergreen-800 hover:bg-evergreen-700 text-snow-100 font-semibold transition flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Back
+                    </button>
+                    <button onclick="switchStage(4)" class="px-6 py-3 rounded-2xl bg-gold-500 hover:bg-gold-400 text-evergreen-950 font-bold shadow-lg transition flex items-center gap-2">
+                        Next: Functional English <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- =====================================================================
+                 STAGE 4: FUNCTIONAL LANGUAGE (12-13 MINS)
+            ====================================================================== -->
+            <section id="stage-4" class="stage-section hidden space-y-8">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-evergreen-800 to-crimson-800 rounded-3xl p-6 sm:p-8 border border-gold-500/30 shadow-xl">
+                    <div class="flex flex-wrap justify-between items-start gap-4">
+                        <div>
+                            <span class="inline-block px-3 py-1 rounded-full bg-gold-500/20 text-gold-400 text-xs font-bold uppercase tracking-wider mb-2">Stage 4 • 12–13 Minutes</span>
+                            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-snow-50">Functional Language: Surviving Holiday Chaos</h2>
+                            <p class="text-snow-200/90 mt-2 max-w-2xl text-sm sm:text-base">Learn natural A2 phrases for <strong>giving warnings</strong>, <strong>making polite excuses (white lies)</strong>, and <strong>asking for help in an emergency</strong>.</p>
+                        </div>
+                        <div class="teacher-hint hidden bg-evergreen-950/90 border border-gold-400/50 p-4 rounded-2xl max-w-sm text-xs text-snow-100">
+                            <p class="font-bold text-gold-400 mb-1"><i class="fa-solid fa-lightbulb mr-1"></i> Teacher Tip (Intonation):</p>
+                            <p>Have the student practice stress and emotion! Warnings need urgent, high energy; excuses need a polite, calm tone.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Functional Phrases Reference Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <!-- Category 1: Giving Warnings -->
+                    <div class="bg-snow-50 text-evergreen-950 rounded-3xl p-6 shadow-xl border-t-8 border-crimson-600">
+                        <div class="w-10 h-10 rounded-xl bg-crimson-100 text-crimson-700 flex items-center justify-center text-lg mb-3">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <h3 class="font-serif text-lg font-bold text-evergreen-950 mb-3">1. Giving Warnings</h3>
+                        <ul class="space-y-2.5 text-sm">
+                            <li class="p-2.5 rounded-xl bg-snow-100 font-medium text-evergreen-900">
+                                <span class="text-crimson-700 font-bold">Watch out for</span> the icy stairs!
+                            </li>
+                            <li class="p-2.5 rounded-xl bg-snow-100 font-medium text-evergreen-900">
+                                <span class="text-crimson-700 font-bold">Be careful!</span> That door handle is hot!
+                            </li>
+                            <li class="p-2.5 rounded-xl bg-snow-100 font-medium text-evergreen-900">
+                                <span class="text-crimson-700 font-bold">Don't touch that!</span> It's a trap!
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Category 2: Making Excuses / White Lies -->
+                    <div class="bg-snow-50 text-evergreen-950 rounded-3xl p-6 shadow-xl border-t-8 border-gold-500">
+                        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-lg mb-3">
+                            <i class="fa-solid fa-mask"></i>
+                        </div>
+                        <h3 class="font-serif text-lg font-bold text-evergreen-950 mb-3">2. Polite Excuses & White Lies</h3>
+                        <ul class="space-y-2.5 text-sm">
+                            <li class="p-2.5 rounded-xl bg-snow-100 font-medium text-evergreen-900">
+                                <span class="text-amber-700 font-bold">I'm afraid</span> my parents are busy right now.
+                            </li>
+                            <li class="p-2.5 rounded-xl bg-snow-100 font-medium text-evergreen-900">
+                                <span class="text-amber-700 font-bold">Actually,</span> my dad is in the shower.
+                            </li>
+                            <li class="p-2.5 rounded-xl bg-snow-100 font-medium text-evergreen-900">
+                                <span class="text-amber-700 font-bold">Sorry, but</span> I can't open the door for strangers.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Category 3: Asking for Help in an Emergency -->
+                    <div class="bg-snow-50 text-evergreen-950 rounded-3xl p-6 shadow-xl border-t-8 border-evergreen-800">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-evergreen-800 flex items-center justify-center text-lg mb-3">
+                            <i class="fa-solid fa-phone-volume"></i>
+                        </div>
+                        <h3 class="font-serif text-lg font-bold text-evergreen-950 mb-3">3. Asking for Urgent Help</h3>
+                        <ul class="space-y-2.5 text-sm">
+                            <li class="p-2.5 rounded-xl bg-snow-100 font-medium text-evergreen-900">
+                                <span class="text-evergreen-800 font-bold">Could you please help me?</span> It's an emergency!
+                            </li>
+                            <li class="p-2.5 rounded-xl bg-snow-100 font-medium text-evergreen-900">
+                                <span class="text-evergreen-800 font-bold">I urgently need</span> a ticket to Chicago!
+                            </li>
+                            <li class="p-2.5 rounded-xl bg-snow-100 font-medium text-evergreen-900">
+                                <span class="text-evergreen-800 font-bold">Please send someone</span> to 671 Lincoln Boulevard!
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Interactive Dialogue Builder / Response Drill -->
+                <div class="bg-snow-50 text-evergreen-950 rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-gold-500/40">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+                        <div>
+                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-crimson-700"><i class="fa-solid fa-theater-masks mr-2"></i>Interactive Dialogue Drill: Choose the Best Response</h3>
+                            <p class="text-sm text-evergreen-800/80 mt-1">Read the situation from the movie and pick the most natural A2 response!</p>
+                        </div>
+                        <button onclick="resetDialogueDrill()" class="px-3 py-1.5 rounded-xl bg-snow-200 hover:bg-snow-300 text-evergreen-900 text-xs font-bold transition">
+                            Reset Drill
+                        </button>
+                    </div>
+
+                    <div class="space-y-6" id="dialogue-drill-container">
+                        <!-- Dialogue scenarios injected via JS -->
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="switchStage(3)" class="px-5 py-3 rounded-2xl bg-evergreen-800 hover:bg-evergreen-700 text-snow-100 font-semibold transition flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Back
+                    </button>
+                    <button onclick="switchStage(5)" class="px-6 py-3 rounded-2xl bg-gold-500 hover:bg-gold-400 text-evergreen-950 font-bold shadow-lg transition flex items-center gap-2">
+                        Next: Defend Your House! <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- =====================================================================
+                 STAGE 5: GAMIFIED PRODUCTION — 'DEFEND YOUR HOUSE!' (10 MINS)
+            ====================================================================== -->
+            <section id="stage-5" class="stage-section hidden space-y-8">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-crimson-800 via-crimson-700 to-evergreen-800 rounded-3xl p-6 sm:p-8 border border-gold-500/30 shadow-xl">
+                    <div class="flex flex-wrap justify-between items-start gap-4">
+                        <div>
+                            <span class="inline-block px-3 py-1 rounded-full bg-gold-500/20 text-gold-400 text-xs font-bold uppercase tracking-wider mb-2">Stage 5 • 10 Minutes</span>
+                            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-snow-50">Game: "Defend Your House!" & Role-Play</h2>
+                            <p class="text-snow-200/90 mt-2 max-w-2xl text-sm sm:text-base">The Wet Bandits are coming in 10 minutes! Choose <strong>3 household items</strong> to build your traps and explain your security plan to your teacher.</p>
+                        </div>
+                        <div class="teacher-hint hidden bg-evergreen-950/90 border border-gold-400/50 p-4 rounded-2xl max-w-sm text-xs text-snow-100">
+                            <p class="font-bold text-gold-400 mb-1"><i class="fa-solid fa-lightbulb mr-1"></i> Teacher Tip (Delayed Error Correction):</p>
+                            <p>Let the student speak freely without interrupting! Note down 2–3 grammar/vocab wins and 2 gentle corrections in the chatbox at the very end.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Trap Builder Game -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Left: Item Selector (Pick 3) -->
+                    <div class="lg:col-span-7 bg-snow-50 text-evergreen-950 rounded-3xl p-6 shadow-xl border-2 border-gold-500/40">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-serif text-xl font-bold text-crimson-700"><i class="fa-solid fa-toolbox mr-2"></i>Step 1: Pick 3 Trap Items</h3>
+                            <span class="px-3 py-1 rounded-full bg-evergreen-900 text-gold-400 text-xs font-bold">
+                                Selected: <span id="selected-items-count">0</span> / 3
+                            </span>
+                        </div>
+                        <p class="text-xs text-evergreen-800/80 mb-4">Click up to 3 items below, or click <strong>"Randomize 3 Items"</strong> for a surprise challenge!</p>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5" id="trap-items-grid">
+                            <!-- 8 Trap Items injected via JS -->
+                        </div>
+
+                        <div class="flex flex-wrap gap-3">
+                            <button onclick="randomizeTrapItems()" class="px-4 py-2.5 rounded-xl bg-crimson-700 hover:bg-crimson-600 text-white text-sm font-bold shadow transition flex items-center gap-2">
+                                <i class="fa-solid fa-dice"></i> Randomize 3 Items
+                            </button>
+                            <button onclick="clearTrapItems()" class="px-4 py-2.5 rounded-xl bg-snow-200 hover:bg-snow-300 text-evergreen-900 text-sm font-semibold transition">
+                                Clear Selection
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Battle Plan Speaking Prompt -->
+                    <div class="lg:col-span-5 bg-evergreen-950 text-snow-50 rounded-3xl p-6 shadow-xl border-2 border-gold-400/50 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-serif text-xl font-bold text-gold-400 mb-3"><i class="fa-solid fa-shield-halved mr-2"></i>Step 2: Explain Your Trap Plan!</h3>
+                            
+                            <!-- Selected Items Display -->
+                            <div class="bg-evergreen-900/90 rounded-2xl p-4 border border-gold-500/30 mb-4 min-h-[96px]">
+                                <p class="text-xs uppercase tracking-wider text-gold-400/80 font-bold mb-2">Your Arsenal:</p>
+                                <div id="selected-arsenal-display" class="flex flex-wrap gap-2 text-sm text-snow-200/70 italic">
+                                    Select 3 items on the left to build your plan...
+                                </div>
+                            </div>
+
+                            <!-- Speaking Checklist / Prompts -->
+                            <div class="space-y-2.5 text-sm">
+                                <p class="font-semibold text-snow-100">Tell your teacher:</p>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                                    <span class="text-gold-400 font-bold">1. Location:</span> "First, I will put the <strong>[item 1]</strong> near the front door / stairs..."
+                                </div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                                    <span class="text-gold-400 font-bold">2. Action:</span> "When the burglars open the door, they will..."
+                                </div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                                    <span class="text-gold-400 font-bold">3. Warning:</span> "I will shout: <em>'Watch out for...!'</em>"
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="celebrateCompletion()" class="mt-6 w-full py-3 rounded-2xl bg-gold-500 hover:bg-gold-400 text-evergreen-950 font-bold shadow-lg transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-star"></i> Complete Trap Challenge!
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bonus 1-on-1 Role-Play Cards -->
+                <div class="bg-snow-50 text-evergreen-950 rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-gold-500/40">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                        <div>
+                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-crimson-700"><i class="fa-solid fa-headset mr-2"></i>Bonus 1-on-1 Live Role-Play (2 Minutes)</h3>
+                            <p class="text-sm text-evergreen-800/80">Choose one scenario to act out live with your teacher!</p>
+                        </div>
+                        <button onclick="pickRandomRoleplay()" class="px-4 py-2 rounded-xl bg-evergreen-900 hover:bg-evergreen-800 text-gold-400 text-xs font-bold transition">
+                            <i class="fa-solid fa-shuffle mr-1"></i> Pick Random Scenario
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="roleplay-cards-container">
+                        <!-- Roleplay Card 1 -->
+                        <div id="rp-card-1" class="p-5 rounded-2xl bg-snow-100 border-2 border-snow-200 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="px-2.5 py-0.5 rounded-full bg-crimson-700 text-white text-xs font-bold">Scenario A: Airport Emergency</span>
+                                <i class="fa-solid fa-plane-departure text-crimson-700"></i>
+                            </div>
+                            <p class="text-sm font-bold text-evergreen-950 mb-2">Student = Kate (Kevin's Mom) | Teacher = Airport Ticket Agent</p>
+                            <p class="text-xs text-evergreen-900/90 leading-relaxed mb-3">
+                                <strong>Goal:</strong> You are in Paris, and your 8-year-old son is home alone in Chicago! Convince the ticket agent to give you a seat on the next flight. Use: <em>"It's an emergency!", "I urgently need...", "Could you please help me?"</em>
+                            </p>
+                        </div>
+
+                        <!-- Roleplay Card 2 -->
+                        <div id="rp-card-2" class="p-5 rounded-2xl bg-snow-100 border-2 border-snow-200 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="px-2.5 py-0.5 rounded-full bg-evergreen-800 text-gold-400 text-xs font-bold">Scenario B: Suspicious Stranger</span>
+                                <i class="fa-solid fa-door-closed text-evergreen-800"></i>
+                            </div>
+                            <p class="text-sm font-bold text-evergreen-950 mb-2">Student = Kevin | Teacher = Harry (The Burglar at the Door)</p>
+                            <p class="text-xs text-evergreen-900/90 leading-relaxed mb-3">
+                                <strong>Goal:</strong> Harry knocks on the door pretending to be a police officer checking the neighborhood. Do NOT open the door! Make polite excuses so he thinks your parents are home. Use: <em>"I'm afraid...", "Actually, my dad is...", "Sorry, but..."</em>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="switchStage(4)" class="px-5 py-3 rounded-2xl bg-evergreen-800 hover:bg-evergreen-700 text-snow-100 font-semibold transition flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Back
+                    </button>
+                    <button onclick="switchStage(1)" class="px-6 py-3 rounded-2xl bg-crimson-700 hover:bg-crimson-600 text-white font-bold shadow-lg transition flex items-center gap-2">
+                        <i class="fa-solid fa-rotate-left"></i> Back to Start
+                    </button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Festive Footer -->
+        <footer class="bg-evergreen-950 border-t border-gold-500/20 py-4 px-4 text-center text-xs text-snow-200/60">
+            <p>Merry Christmas & Happy Teaching! • Interactive A2 ESL Lesson Plan inspired by <em>Home Alone</em></p>
+        </footer>
+    </div>
+
+    <!-- =========================================================================
+         JAVASCRIPT APPLICATION LOGIC
+    ========================================================================== -->
+    <script>
+        // ---------------------------------------------------------------------
+        // 1. STATE & LESSON DATA
+        // ---------------------------------------------------------------------
+        let currentStage = 1;
+        let teacherMode = false;
+        let timerSeconds = 60 * 60; // 60 minutes
+        let timerInterval = null;
+        let timerRunning = false;
+
+        // Stage 1: This or That Data
+        const thisOrThatData = [
+            {
+                id: 1,
+                optionA: { title: "Stay Home & Relax", icon: "fa-couch", desc: "Pajamas, movies, and zero stress" },
+                optionB: { title: "Travel on Vacation", icon: "fa-plane", desc: "New cities, hotels, and adventure" },
+                followUp: "Where did you spend your last winter holidays?"
+            },
+            {
+                id: 2,
+                optionA: { title: "Big, Noisy Family Party", icon: "fa-people-group", desc: "Lots of cousins, food, and laughter" },
+                optionB: { title: "Quiet, Cozy Evening", icon: "fa-mug-hot", desc: "Peaceful night with 1 or 2 close people" },
+                followUp: "How many people usually celebrate Christmas or New Year with you?"
+            },
+            {
+                id: 3,
+                optionA: { title: "Real Pine Tree", icon: "fa-tree", desc: "Fresh forest smell and real needles" },
+                optionB: { title: "Artificial Tree", icon: "fa-wand-magic-sparkles", desc: "Clean, easy, and reusable every year" },
+                followUp: "When do you usually decorate your home for the holidays?"
+            },
+            {
+                id: 4,
+                optionA: { title: "Snowball Fight Outside", icon: "fa-snowflake", desc: "Active winter fun in the cold snow" },
+                optionB: { title: "Hot Cocoa by the Fire", icon: "fa-fire", desc: "Warm blankets and sweet chocolate" },
+                followUp: "Do you prefer snowy winters or warm, sunny weather?"
+            }
+        ];
+
+        // Stage 2: 10 Target Vocabulary Items
+        const vocabData = [
+            {
+                word: "Christmas Eve",
+                phonetic: "/ˌkrɪs.məs ˈiːv/",
+                pos: "noun",
+                icon: "fa-moon",
+                def: "The evening or day before Christmas Day (December 24).",
+                example: "On Christmas Eve, the family packed their bags for Paris."
+            },
+            {
+                word: "ornament",
+                phonetic: "/ˈɔː.nə.mənt/",
+                pos: "noun",
+                icon: "fa-bahai",
+                def: "A small, pretty decoration that you hang on a Christmas tree.",
+                example: "Kevin put glass ornaments under the window as a trap."
+            },
+            {
+                word: "stockings",
+                phonetic: "/ˈstɒk.ɪŋz/",
+                pos: "noun (pl.)",
+                icon: "fa-socks",
+                def: "Large socks hung by the fireplace for small Christmas gifts.",
+                example: "Mom hung eight red stockings over the fireplace."
+            },
+            {
+                word: "burglar",
+                phonetic: "/ˈbɜː.ɡlər/",
+                pos: "noun",
+                icon: "fa-user-secret",
+                def: "A person who enters a building illegally to steal things.",
+                example: "Two burglars wanted to steal money from Kevin's house."
+            },
+            {
+                word: "trap",
+                phonetic: "/træp/",
+                pos: "noun",
+                icon: "fa-burst",
+                def: "A clever plan or device used to catch or stop someone.",
+                example: "Kevin built funny traps to stop the bad guys."
+            },
+            {
+                word: "lock up",
+                phonetic: "/ˌlɒk ˈʌp/",
+                pos: "phrasal verb",
+                icon: "fa-lock",
+                def: "To close and lock all the doors and windows of a house.",
+                example: "Don't forget to lock up the house before we leave!"
+            },
+            {
+                word: "suburbs",
+                phonetic: "/ˈsʌb.ɜːbz/",
+                pos: "noun (pl.)",
+                icon: "fa-house-chimney",
+                def: "A quiet area with houses outside the center of a big city.",
+                example: "The McCallisters live in a big house in the Chicago suburbs."
+            },
+            {
+                word: "oversleep",
+                phonetic: "/ˌəʊ.vəˈsliːp/",
+                pos: "verb",
+                icon: "fa-bed",
+                def: "To sleep longer than you planned and wake up late.",
+                example: "The alarm clock didn't ring, so the whole family overslept!"
+            },
+            {
+                word: "runway",
+                phonetic: "/ˈrʌn.weɪ/",
+                pos: "noun",
+                icon: "fa-plane-up",
+                def: "The long road at an airport where planes take off and land.",
+                example: "They ran fast because their plane was already on the runway."
+            },
+            {
+                word: "hitchhike",
+                phonetic: "/ˈhɪtʃ.haɪk/",
+                pos: "verb",
+                icon: "fa-thumbs-up",
+                def: "To travel for free by asking drivers for a ride in their car.",
+                example: "Kevin's mom tried to hitchhike back home with a polka band."
+            }
+        ];
+
+        // Stage 2B: Gap-Fill Quiz Data (8 items)
+        const gapFillData = [
+            { id: 0, before: "1. The alarm clock broke, so the family ", after: " and woke up very late!", answer: "overslept" },
+            { id: 1, before: "2. They live in a quiet neighborhood in the ", after: " of Chicago.", answer: "suburbs" },
+            { id: 2, before: "3. Before going on vacation, you must ", after: " all the doors and windows.", answer: "lock up" },
+            { id: 3, before: "4. Harry and Marv are two clumsy ", after: " who want to rob empty houses.", answer: "burglars" },
+            { id: 4, before: "5. Santa puts candy and small toys inside Christmas ", after: ".", answer: "stockings" },
+            { id: 5, before: "6. Be careful! Don't step on that shiny glass ", after: " from the tree!", answer: "ornament" },
+            { id: 6, before: "7. Kevin made a clever ", after: " with paint cans on the stairs.", answer: "trap" },
+            { id: 7, before: "8. December 24th is ", after: ", the night before Christmas Day.", answer: "Christmas Eve" }
+        ];
+        const wordBankWords = ["overslept", "suburbs", "lock up", "burglars", "stockings", "ornament", "trap", "Christmas Eve"];
+        let selectedWordPill = null;
+        let userAnswers = {};
+
+        // Stage 3: Trailer Ordering & True/False Data
+        const orderingEvents = [
+            { id: "ev1", text: "Kevin's mom realizes on the airplane that they forgot Kevin.", correctOrder: 2 },
+            { id: "ev2", text: "Kevin defends his house using clever traps like a 'home security system'.", correctOrder: 5 },
+            { id: "ev3", text: "The McCallister family rushes to the airport and flies away on vacation.", correctOrder: 1 },
+            { id: "ev4", text: "Kevin goes shopping at the supermarket and talks to the cashier.", correctOrder: 3 },
+            { id: "ev5", text: "Two burglars (Harry and Marv) try to break into the McCallister house.", correctOrder: 4 }
+        ];
+
+        const trueFalseData = [
+            {
+                id: "tf1",
+                statement: "1. Kevin is sad and cries all day when he realizes he is home alone.",
+                answer: false,
+                explanation: "False! At first he is surprised, then he celebrates, jumps on the bed, and eats junk food!"
+            },
+            {
+                id: "tf2",
+                statement: "2. The two burglars call themselves 'The Wet Bandits'.",
+                answer: true,
+                explanation: "True! Harry and Marv are the burglars trying to rob the neighborhood."
+            },
+            {
+                id: "tf3",
+                statement: "3. Kevin's mom easily buys a direct flight ticket home at the airport.",
+                answer: false,
+                explanation: "False! All flights are full because of the Christmas holidays."
+            },
+            {
+                id: "tf4",
+                statement: "4. Kevin tells the supermarket cashier that his parents are out of town.",
+                answer: false,
+                explanation: "False! He makes excuses so people think his parents are busy at home."
+            }
+        ];
+
+        const afterWatchDiscussion = [
+            {
+                q: "Was Kevin brave or crazy to stay and protect the house alone?",
+                starter: "I think Kevin was very... because he..."
+            },
+            {
+                q: "What would YOU do first if you woke up alone in a huge house?",
+                starter: "If I woke up alone in a big house, first I would..."
+            },
+            {
+                q: "Why do you think 'Home Alone' is still popular 35+ years later?",
+                starter: "In my opinion, people still love this movie because..."
+            }
+        ];
+
+        // Stage 4: Functional Dialogue Drill Data
+        const dialogueScenarios = [
+            {
+                id: "d1",
+                context: "Situation 1: Marv (the burglar) is walking barefoot toward the window where you put glass Christmas ornaments.",
+                prompt: "What do you shout to warn someone in real life?",
+                options: [
+                    { text: "Watch out for the broken ornaments on the floor!", correct: true, feedback: "Spot on! 'Watch out for + noun' is the best way to warn someone of immediate danger." },
+                    { text: "I'm afraid the floor is very decorative today.", correct: false, feedback: "Too polite! That sounds like a white lie, not an urgent warning." },
+                    { text: "Could you please step on the ornaments?", correct: false, feedback: "That's a polite request, not a warning!" }
+                ]
+            },
+            {
+                id: "d2",
+                context: "Situation 2: The grocery store cashier asks Kevin: 'Where are your parents, young man?'",
+                prompt: "How does Kevin make a polite excuse / white lie?",
+                options: [
+                    { text: "Be careful! My parents are at the airport!", correct: false, feedback: "Careful! If he says they are at the airport, people will know he is alone." },
+                    { text: "I'm afraid my mom is in the car, and my dad is at work.", correct: true, feedback: "Great job! Using 'I'm afraid...' makes an excuse sound natural and polite." },
+                    { text: "Please send someone to my house immediately!", correct: false, feedback: "That's for an emergency, whereas Kevin wants to stay secret." }
+                ]
+            },
+            {
+                id: "d3",
+                context: "Situation 3: You are at a busy airport on Christmas Eve and missed your flight home.",
+                prompt: "How do you ask the airline worker for urgent help?",
+                options: [
+                    { text: "Don't touch that computer! Give me a ticket!", correct: false, feedback: "Too aggressive! Airline staff respond much better to polite urgency." },
+                    { text: "Sorry, but I can't fly today.", correct: false, feedback: "That refuses help instead of asking for it." },
+                    { text: "Could you please help me? It's an emergency and I urgently need to get home!", correct: true, feedback: "Perfect! Polite modal ('Could you please...') + clear urgency ('It's an emergency')." }
+                ]
+            }
+        ];
+
+        // Stage 5: Trap Builder Items
+        const trapItems = [
+            { id: "item1", name: "Glass Ornaments", icon: "fa-bahai" },
+            { id: "item2", name: "Hot Clothes Iron", icon: "fa-shirt" },
+            { id: "item3", name: "Cans of Paint", icon: "fa-fill-drip" },
+            { id: "item4", name: "Toy Micro Cars", icon: "fa-car-side" },
+            { id: "item5", name: "Hairdryer & Feathers", icon: "fa-wind" },
+            { id: "item6", name: "Bucket of Ice Water", icon: "fa-bucket" },
+            { id: "item7", name: "Loud Radio & Mannequin", icon: "fa-radio" },
+            { id: "item8", name: "Sticky Glue & Tape", icon: "fa-tape" }
+        ];
+        let selectedTrapItems = [];
+
+        // ---------------------------------------------------------------------
+        // 2. INITIALIZATION & UI RENDERING
+        // ---------------------------------------------------------------------
+        window.onload = function () {
+            initSnowfall();
+            renderThisOrThat();
+            renderVocabCards();
+            renderGapFillQuiz();
+            renderOrderingTask();
+            renderTrueFalseTask();
+            renderAfterWatchCards();
+            renderDialogueDrill();
+            renderTrapItems();
+        };
+
+        // Toast Helper (Replaces alert)
+        function showToast(msg, iconClass = "fa-bell") {
+            const box = document.getElementById("toast-box");
+            const msgEl = document.getElementById("toast-msg");
+            const iconEl = document.getElementById("toast-icon");
+            msgEl.textContent = msg;
+            iconEl.className = `fa-solid ${iconClass} text-gold-400 text-xl`;
+            box.classList.remove("translate-y-24", "opacity-0");
+            setTimeout(() => {
+                box.classList.add("translate-y-24", "opacity-0");
+            }, 3500);
+        }
+
+        // Stage Navigation
+        function switchStage(stageNum) {
+            currentStage = stageNum;
+            document.querySelectorAll(".stage-section").forEach(sec => sec.classList.add("hidden"));
+            document.getElementById(`stage-${stageNum}`).classList.remove("hidden");
+
+            document.querySelectorAll(".stage-tab").forEach((tab, idx) => {
+                const num = idx + 1;
+                const badge = tab.querySelector("span:first-child");
+                if (num === stageNum) {
+                    tab.className = "stage-tab px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-crimson-700 text-white shadow-md border border-gold-400/50";
+                    badge.className = "w-5 h-5 rounded-full bg-gold-500 text-evergreen-950 text-xs flex items-center justify-center font-bold";
+                } else {
+                    tab.className = "stage-tab px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-evergreen-900/80 text-snow-200 hover:bg-evergreen-800 border border-transparent";
+                    badge.className = "w-5 h-5 rounded-full bg-evergreen-800 text-gold-400 text-xs flex items-center justify-center font-bold";
+                }
+            });
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        // Teacher Key Toggle
+        function toggleTeacherMode() {
+            teacherMode = !teacherMode;
+            const badge = document.getElementById("teacher-status-badge");
+            const hints = document.querySelectorAll(".teacher-hint");
+            if (teacherMode) {
+                badge.textContent = "ON";
+                badge.className = "px-2 py-0.5 text-xs rounded-full bg-gold-500 text-evergreen-950 font-bold";
+                hints.forEach(h => h.classList.remove("hidden"));
+                showToast("Teacher Key & Methodological Tips enabled!", "fa-chalkboard-user");
+            } else {
+                badge.textContent = "OFF";
+                badge.className = "px-2 py-0.5 text-xs rounded-full bg-white/10 text-snow-200";
+                hints.forEach(h => h.classList.add("hidden"));
+                showToast("Teacher Key hidden for student screen-share.", "fa-eye-slash");
+            }
+        }
+
+        // Lesson Timer
+        function toggleTimer() {
+            const btn = document.getElementById("timer-btn");
+            if (timerRunning) {
+                clearInterval(timerInterval);
+                timerRunning = false;
+                btn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            } else {
+                timerRunning = true;
+                btn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        showToast("60-minute lesson timer finished!", "fa-clock");
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            timerSeconds = 60 * 60;
+            updateTimerDisplay();
+            document.getElementById("timer-btn").innerHTML = '<i class="fa-solid fa-play"></i>';
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            document.getElementById("lesson-timer").textContent = 
+                `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        // ---------------------------------------------------------------------
+        // 3. STAGE 1 RENDERING: THIS OR THAT
+        // ---------------------------------------------------------------------
+        function renderThisOrThat() {
+            const container = document.getElementById("this-or-that-grid");
+            container.innerHTML = thisOrThatData.map(item => `
+                <div class="bg-evergreen-950/80 border border-gold-500/30 rounded-3xl p-5 shadow-lg flex flex-col justify-between">
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="selectThisOrThat(${item.id}, 'A')" id="tot-${item.id}-A" class="tot-btn-${item.id} p-4 rounded-2xl bg-evergreen-900 hover:bg-evergreen-800 border-2 border-transparent text-left transition flex flex-col justify-between">
+                            <i class="fa-solid ${item.optionA.icon} text-2xl text-gold-400 mb-2"></i>
+                            <div>
+                                <p class="font-bold text-sm sm:text-base text-snow-50">${item.optionA.title}</p>
+                                <p class="text-xs text-snow-200/70 mt-1">${item.optionA.desc}</p>
+                            </div>
+                        </button>
+                        <button onclick="selectThisOrThat(${item.id}, 'B')" id="tot-${item.id}-B" class="tot-btn-${item.id} p-4 rounded-2xl bg-evergreen-900 hover:bg-evergreen-800 border-2 border-transparent text-left transition flex flex-col justify-between">
+                            <i class="fa-solid ${item.optionB.icon} text-2xl text-crimson-500 mb-2"></i>
+                            <div>
+                                <p class="font-bold text-sm sm:text-base text-snow-50">${item.optionB.title}</p>
+                                <p class="text-xs text-snow-200/70 mt-1">${item.optionB.desc}</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div id="tot-followup-${item.id}" class="mt-4 pt-3 border-t border-white/10 text-xs sm:text-sm text-gold-400 flex items-center gap-2 opacity-75">
+                        <i class="fa-solid fa-comment-dots"></i>
+                        <span><strong>Follow-up:</strong> ${item.followUp}</span>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function selectThisOrThat(id, choice) {
+            document.querySelectorAll(`.tot-btn-${id}`).forEach(btn => {
+                btn.classList.remove("border-gold-400", "bg-crimson-800/60", "scale-[1.02]");
+                btn.classList.add("border-transparent", "bg-evergreen-900");
+            });
+            const activeBtn = document.getElementById(`tot-${id}-${choice}`);
+            activeBtn.classList.remove("border-transparent", "bg-evergreen-900");
+            activeBtn.classList.add("border-gold-400", "bg-crimson-800/60", "scale-[1.02]");
+            
+            const followUp = document.getElementById(`tot-followup-${id}`);
+            followUp.classList.remove("opacity-75");
+            followUp.classList.add("font-semibold");
+        }
+
+        // ---------------------------------------------------------------------
+        // 4. STAGE 2 RENDERING: FLIP CARDS & GAP FILL
+        // ---------------------------------------------------------------------
+        function renderVocabCards() {
+            const grid = document.getElementById("vocab-cards-grid");
+            grid.innerHTML = vocabData.map((item, idx) => `
+                <div onclick="flipSingleCard(${idx})" class="perspective-1000 h-52 cursor-pointer group">
+                    <div id="vocab-card-inner-${idx}" class="vocab-card-inner relative w-full h-full transform-style-3d">
+                        <!-- Front -->
+                        <div class="backface-hidden absolute inset-0 bg-gradient-to-br from-snow-50 to-snow-100 text-evergreen-950 rounded-2xl p-4 border-2 border-gold-500/50 shadow-lg flex flex-col items-center justify-center text-center">
+                            <div class="w-11 h-11 rounded-full bg-crimson-700/10 text-crimson-700 flex items-center justify-center text-xl mb-2 group-hover:scale-110 transition">
+                                <i class="fa-solid ${item.icon}"></i>
+                            </div>
+                            <h4 class="font-serif text-lg font-bold text-evergreen-950">${item.word}</h4>
+                            <p class="text-xs font-mono text-crimson-700 mt-1">${item.phonetic}</p>
+                            <span class="mt-2 px-2 py-0.5 rounded bg-evergreen-900/10 text-evergreen-900 text-[11px] font-semibold">${item.pos}</span>
+                            <span class="absolute bottom-2 right-3 text-[10px] text-evergreen-800/50"><i class="fa-solid fa-rotate"></i> flip</span>
+                        </div>
+                        <!-- Back -->
+                        <div class="backface-hidden rotate-y-180 absolute inset-0 bg-evergreen-950 text-snow-50 rounded-2xl p-4 border-2 border-gold-400 shadow-lg flex flex-col justify-between text-left">
+                            <div>
+                                <span class="text-[11px] uppercase tracking-wider font-bold text-gold-400">${item.word}</span>
+                                <p class="text-xs text-snow-100 mt-1 leading-snug">${item.def}</p>
+                            </div>
+                            <div class="bg-white/10 p-2 rounded-xl border border-white/10">
+                                <p class="text-[11px] italic text-gold-300 leading-snug">"${item.example}"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function flipSingleCard(idx) {
+            const card = document.getElementById(`vocab-card-inner-${idx}`);
+            card.classList.toggle("rotate-y-180");
+        }
+
+        let allFlipped = false;
+        function flipAllCards() {
+            allFlipped = !allFlipped;
+            document.querySelectorAll(".vocab-card-inner").forEach(card => {
+                if (allFlipped) card.classList.add("rotate-y-180");
+                else card.classList.remove("rotate-y-180");
+            });
+        }
+
+        function renderGapFillQuiz() {
+            const bank = document.getElementById("word-bank-container");
+            // Shuffle display order slightly
+            const shuffledBank = [...wordBankWords].sort(() => Math.random() - 0.5);
+            bank.innerHTML = shuffledBank.map(word => `
+                <button onclick="selectWordBankPill('${word}')" id="pill-${word.replace(/\s+/g, '-')}" class="word-pill px-3.5 py-1.5 rounded-xl bg-evergreen-900 hover:bg-crimson-700 text-snow-50 text-sm font-semibold shadow transition border border-gold-500/30">
+                    ${word}
+                </button>
+            `).join("");
+
+            const sentences = document.getElementById("gap-fill-sentences");
+            sentences.innerHTML = gapFillData.map(item => `
+                <div class="p-3.5 rounded-2xl bg-snow-100 border border-snow-200 flex flex-wrap items-center gap-1.5">
+                    <span>${item.before}</span>
+                    <button onclick="fillBlank(${item.id})" id="blank-${item.id}" class="min-w-[130px] px-3 py-1 rounded-xl border-2 border-dashed border-crimson-700/50 bg-white text-crimson-700 font-bold text-sm hover:bg-crimson-50 transition">
+                        [ click to fill ]
+                    </button>
+                    <span>${item.after}</span>
+                    <span class="teacher-hint ${teacherMode ? '' : 'hidden'} ml-auto text-xs font-bold px-2 py-0.5 rounded bg-gold-500/30 text-evergreen-950">
+                        Key: ${item.answer}
+                    </span>
+                </div>
+            `).join("");
+        }
+
+        function selectWordBankPill(word) {
+            selectedWordPill = word;
+            document.querySelectorAll(".word-pill").forEach(p => {
+                p.classList.remove("ring-4", "ring-gold-400", "bg-crimson-700");
+                p.classList.add("bg-evergreen-900");
+            });
+            const active = document.getElementById(`pill-${word.replace(/\s+/g, '-')}`);
+            if (active) {
+                active.classList.remove("bg-evergreen-900");
+                active.classList.add("bg-crimson-700", "ring-4", "ring-gold-400");
+            }
+        }
+
+        function fillBlank(id) {
+            if (!selectedWordPill) {
+                showToast("First click a word in the Word Bank above!", "fa-hand-pointer");
+                return;
+            }
+            const item = gapFillData.find(g => g.id === id);
+            const blankBtn = document.getElementById(`blank-${id}`);
+            
+            if (selectedWordPill.toLowerCase() === item.answer.toLowerCase()) {
+                blankBtn.textContent = item.answer;
+                blankBtn.className = "px-3 py-1 rounded-xl bg-emerald-600 text-white font-bold text-sm shadow";
+                blankBtn.disabled = true;
+                userAnswers[id] = true;
+                
+                // Disable used pill
+                const usedPill = document.getElementById(`pill-${selectedWordPill.replace(/\s+/g, '-')}`);
+                if (usedPill) {
+                    usedPill.disabled = true;
+                    usedPill.className = "word-pill px-3.5 py-1.5 rounded-xl bg-gray-300 text-gray-500 text-sm font-semibold line-through cursor-not-allowed";
+                }
+                selectedWordPill = null;
+                updateVocabScore();
+                showToast("Correct! Great job!", "fa-circle-check");
+            } else {
+                blankBtn.textContent = `${selectedWordPill} ✗`;
+                blankBtn.classList.add("bg-crimson-100", "border-crimson-600");
+                showToast("Not quite! Try another word.", "fa-circle-xmark");
+            }
+        }
+
+        function updateVocabScore() {
+            const count = Object.keys(userAnswers).length;
+            document.getElementById("vocab-score").textContent = count;
+            if (count === gapFillData.length) {
+                showToast("Amazing! You completed all 8 vocabulary sentences!", "fa-trophy");
+            }
+        }
+
+        function resetVocabQuiz() {
+            selectedWordPill = null;
+            userAnswers = {};
+            document.getElementById("vocab-score").textContent = "0";
+            renderGapFillQuiz();
+        }
+
+        // ---------------------------------------------------------------------
+        // 5. STAGE 3 RENDERING: TRAILER TASKS
+        // ---------------------------------------------------------------------
+        function renderOrderingTask() {
+            const list = document.getElementById("ordering-tasks-list");
+            list.innerHTML = orderingEvents.map(ev => `
+                <div id="order-row-${ev.id}" class="p-3 rounded-2xl bg-snow-100 border border-snow-200 flex items-center gap-3 transition">
+                    <select id="select-${ev.id}" class="w-14 h-10 rounded-xl border-2 border-evergreen-900/30 bg-white font-bold text-center text-evergreen-950 focus:border-crimson-700 outline-none">
+                        <option value="">-</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <p class="text-sm font-medium text-evergreen-950 flex-grow">${ev.text}</p>
+                    <span class="teacher-hint ${teacherMode ? '' : 'hidden'} text-xs font-bold px-2 py-1 rounded bg-gold-500/30 text-evergreen-950">
+                        #${ev.correctOrder}
+                    </span>
+                </div>
+            `).join("");
+        }
+
+        function checkEventOrder() {
+            let correctCount = 0;
+            orderingEvents.forEach(ev => {
+                const val = parseInt(document.getElementById(`select-${ev.id}`).value);
+                const row = document.getElementById(`order-row-${ev.id}`);
+                if (val === ev.correctOrder) {
+                    correctCount++;
+                    row.className = "p-3 rounded-2xl bg-emerald-100 border-2 border-emerald-500 flex items-center gap-3 transition";
+                } else {
+                    row.className = "p-3 rounded-2xl bg-crimson-100 border-2 border-crimson-500 flex items-center gap-3 transition";
+                }
+            });
+            if (correctCount === 5) {
+                showToast("5/5! You ordered the whole trailer perfectly!", "fa-star");
+            } else {
+                showToast(`You got ${correctCount}/5 right. Check the red boxes!`, "fa-magnifying-glass");
+            }
+        }
+
+        function renderTrueFalseTask() {
+            const list = document.getElementById("tf-tasks-list");
+            list.innerHTML = trueFalseData.map(item => `
+                <div class="p-3.5 rounded-2xl bg-snow-100 border border-snow-200 space-y-2">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <p class="text-sm font-semibold text-evergreen-950">${item.statement}</p>
+                        <div class="flex gap-2">
+                            <button onclick="checkTF('${item.id}', true)" id="tf-btn-${item.id}-true" class="px-3 py-1 rounded-xl text-xs font-bold bg-white border border-evergreen-900/30 hover:bg-evergreen-900 hover:text-white transition">
+                                True
+                            </button>
+                            <button onclick="checkTF('${item.id}', false)" id="tf-btn-${item.id}-false" class="px-3 py-1 rounded-xl text-xs font-bold bg-white border border-evergreen-900/30 hover:bg-crimson-700 hover:text-white transition">
+                                False
+                            </button>
+                        </div>
+                    </div>
+                    <p id="tf-exp-${item.id}" class="hidden text-xs font-medium p-2 rounded-xl"></p>
+                    <p class="teacher-hint ${teacherMode ? '' : 'hidden'} text-xs font-bold text-crimson-700">
+                        Key: ${item.answer ? 'TRUE' : 'FALSE'} — ${item.explanation}
+                    </p>
+                </div>
+            `).join("");
+        }
+
+        function checkTF(id, userChoice) {
+            const item = trueFalseData.find(t => t.id === id);
+            const expEl = document.getElementById(`tf-exp-${id}`);
+            expEl.classList.remove("hidden");
+            if (userChoice === item.answer) {
+                expEl.textContent = `✓ Correct! ${item.explanation}`;
+                expEl.className = "text-xs font-medium p-2 rounded-xl bg-emerald-100 text-emerald-900";
+            } else {
+                expEl.textContent = `✗ Oops! ${item.explanation}`;
+                expEl.className = "text-xs font-medium p-2 rounded-xl bg-crimson-100 text-crimson-900";
+            }
+        }
+
+        function renderAfterWatchCards() {
+            const container = document.getElementById("after-watch-cards");
+            container.innerHTML = afterWatchDiscussion.map((card, idx) => `
+                <div class="bg-evergreen-900 border border-gold-500/30 rounded-2xl p-5 flex flex-col justify-between">
+                    <p class="font-semibold text-base text-snow-50 mb-4">${card.q}</p>
+                    <div>
+                        <button onclick="toggleStarter(${idx})" class="text-xs font-bold text-gold-400 hover:underline flex items-center gap-1">
+                            <i class="fa-solid fa-wand-sparkles"></i> Show Speaking Help
+                        </button>
+                        <p id="starter-box-${idx}" class="hidden mt-2 p-2.5 rounded-xl bg-evergreen-950 text-xs italic text-gold-300 border border-gold-500/20">
+                            "${card.starter}"
+                        </p>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function toggleStarter(idx) {
+            document.getElementById(`starter-box-${idx}`).classList.toggle("hidden");
+        }
+
+        // ---------------------------------------------------------------------
+        // 6. STAGE 4 RENDERING: FUNCTIONAL DIALOGUE DRILL
+        // ---------------------------------------------------------------------
+        function renderDialogueDrill() {
+            const container = document.getElementById("dialogue-drill-container");
+            container.innerHTML = dialogueScenarios.map((scen, sIdx) => `
+                <div class="p-5 rounded-2xl bg-snow-100 border border-snow-200 space-y-3">
+                    <span class="inline-block px-2.5 py-0.5 rounded-full bg-evergreen-900 text-gold-400 text-xs font-bold">${scen.context}</span>
+                    <p class="font-bold text-evergreen-950 text-base">${scen.prompt}</p>
+                    <div class="grid grid-cols-1 gap-2">
+                        ${scen.options.map((opt, oIdx) => `
+                            <button onclick="selectDialogueOption(${sIdx}, ${oIdx})" id="diag-${sIdx}-${oIdx}" class="diag-btn-${sIdx} text-left p-3 rounded-xl bg-white hover:bg-evergreen-50 border-2 border-snow-200 text-sm font-medium text-evergreen-950 transition">
+                                ${opt.text}
+                            </button>
+                        `).join("")}
+                    </div>
+                    <p id="diag-fb-${sIdx}" class="hidden text-xs font-semibold p-3 rounded-xl"></p>
+                </div>
+            `).join("");
+        }
+
+        function selectDialogueOption(sIdx, oIdx) {
+            const scen = dialogueScenarios[sIdx];
+            const chosen = scen.options[oIdx];
+            const fb = document.getElementById(`diag-fb-${sIdx}`);
+            
+            document.querySelectorAll(`.diag-btn-${sIdx}`).forEach(b => {
+                b.classList.remove("border-emerald-500", "bg-emerald-50", "border-crimson-500", "bg-crimson-50");
+            });
+
+            const btn = document.getElementById(`diag-${sIdx}-${oIdx}`);
+            fb.classList.remove("hidden");
+            if (chosen.correct) {
+                btn.classList.add("border-emerald-500", "bg-emerald-50");
+                fb.textContent = `✓ ${chosen.feedback}`;
+                fb.className = "text-xs font-semibold p-3 rounded-xl bg-emerald-100 text-emerald-900";
+            } else {
+                btn.classList.add("border-crimson-500", "bg-crimson-50");
+                fb.textContent = `✗ ${chosen.feedback}`;
+                fb.className = "text-xs font-semibold p-3 rounded-xl bg-crimson-100 text-crimson-900";
+            }
+        }
+
+        function resetDialogueDrill() {
+            renderDialogueDrill();
+        }
+
+        // ---------------------------------------------------------------------
+        // 7. STAGE 5 RENDERING: DEFEND YOUR HOUSE GAME
+        // ---------------------------------------------------------------------
+        function renderTrapItems() {
+            const grid = document.getElementById("trap-items-grid");
+            grid.innerHTML = trapItems.map(item => {
+                const isSelected = selectedTrapItems.includes(item.id);
+                return `
+                    <button onclick="toggleTrapItem('${item.id}')" class="p-3 rounded-2xl border-2 transition flex flex-col items-center justify-center text-center gap-2 ${
+                        isSelected 
+                        ? 'bg-crimson-700 text-white border-gold-400 shadow-md scale-[1.03]' 
+                        : 'bg-snow-100 hover:bg-snow-200 text-evergreen-950 border-snow-200'
+                    }">
+                        <i class="fa-solid ${item.icon} text-xl ${isSelected ? 'text-gold-400' : 'text-crimson-700'}"></i>
+                        <span class="text-xs font-bold leading-tight">${item.name}</span>
+                    </button>
+                `;
+            }).join("");
+            updateArsenalDisplay();
+        }
+
+        function toggleTrapItem(id) {
+            if (selectedTrapItems.includes(id)) {
+                selectedTrapItems = selectedTrapItems.filter(i => i !== id);
+            } else {
+                if (selectedTrapItems.length >= 3) {
+                    showToast("You already picked 3 items! Deselect one first.", "fa-hand");
+                    return;
+                }
+                selectedTrapItems.push(id);
+            }
+            renderTrapItems();
+        }
+
+        function randomizeTrapItems() {
+            const shuffled = [...trapItems].sort(() => Math.random() - 0.5);
+            selectedTrapItems = shuffled.slice(0, 3).map(i => i.id);
+            renderTrapItems();
+            showToast("3 surprise trap items selected!", "fa-dice");
+        }
+
+        function clearTrapItems() {
+            selectedTrapItems = [];
+            renderTrapItems();
+        }
+
+        function updateArsenalDisplay() {
+            document.getElementById("selected-items-count").textContent = selectedTrapItems.length;
+            const display = document.getElementById("selected-arsenal-display");
+            if (selectedTrapItems.length === 0) {
+                display.innerHTML = `<span class="text-sm text-snow-200/70 italic">Select 3 items on the left to build your plan...</span>`;
+            } else {
+                display.innerHTML = selectedTrapItems.map((id, idx) => {
+                    const obj = trapItems.find(t => t.id === id);
+                    return `
+                        <span class="px-3 py-1.5 rounded-xl bg-crimson-700 text-white font-bold text-xs flex items-center gap-2 border border-gold-400/50">
+                            <span class="text-gold-400">#${idx + 1}</span>
+                            <i class="fa-solid ${obj.icon}"></i>
+                            ${obj.name}
+                        </span>
+                    `;
+                }).join("");
+            }
+        }
+
+        function pickRandomRoleplay() {
+            const pick = Math.random() < 0.5 ? 1 : 2;
+            const c1 = document.getElementById("rp-card-1");
+            const c2 = document.getElementById("rp-card-2");
+            c1.classList.remove("border-gold-500", "bg-amber-50", "shadow-md");
+            c2.classList.remove("border-gold-500", "bg-amber-50", "shadow-md");
+            
+            const target = pick === 1 ? c1 : c2;
+            target.classList.add("border-gold-500", "bg-amber-50", "shadow-md");
+            showToast(`Scenario ${pick === 1 ? 'A' : 'B'} selected for live role-play!`, "fa-masks-theater");
+        }
+
+        function celebrateCompletion() {
+            if (selectedTrapItems.length < 3) {
+                showToast("Pick 3 items first so you are ready for the Wet Bandits!", "fa-shield-halved");
+                return;
+            }
+            showToast("Merry Christmas, ya filthy animal! House defended!", "fa-trophy");
+        }
+
+        // ---------------------------------------------------------------------
+        // 8. AMBIENT SNOWFALL CANVAS ANIMATION
+        // ---------------------------------------------------------------------
+        function initSnowfall() {
+            const canvas = document.getElementById("snow-canvas");
+            const ctx = canvas.getContext("2d");
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener("resize", () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const flakes = Array.from({ length: 55 }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                r: Math.random() * 2.5 + 1,
+                d: Math.random() * 0.6 + 0.2,
+                drift: Math.random() * 0.5 - 0.25
+            }));
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = "rgba(253, 251, 247, 0.45)";
+                ctx.beginPath();
+                for (let f of flakes) {
+                    ctx.moveTo(f.x, f.y);
+                    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
+                }
+                ctx.fill();
+                update();
+                requestAnimationFrame(draw);
+            }
+
+            function update() {
+                for (let f of flakes) {
+                    f.y += f.d;
+                    f.x += f.drift;
+                    if (f.y > height) {
+                        f.y = -5;
+                        f.x = Math.random() * width;
+                    }
+                    if (f.x > width) f.x = 0;
+                    if (f.x < 0) f.x = width;
+                }
+            }
+
+            draw();
+        }
+    </script>
+</body>
+</html>
